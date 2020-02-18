@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>排名展示</title>
+</head>
+<body>
+	<form action="/range/add/" method="post">
+		{% csrf_token %}
+		<input type="text" name="name"> 请写入姓名<br>
+		<input type="text" name="score"> 请写入分数<br>
+		<input type="submit" value="提交">
+	</form>
+	<br>
+	<br>
+	<form action="/range/show/" method="post">
+		{% csrf_token %}
+
+		开始名次：<input type="text" name="start" value="0">
+		结束名次：<input type="text" name="end" >
+		查询人姓名：<input type="text" name="name">
+		<input type="submit" value="开始查询">
+		
+	</form>
+	{% if name %}
+	<table border="1px">
+		{% for i in score_list %}
+		{% if forloop.counter >= start and forloop.counter <= end %}
+
+		<tr>
+			<td>{{forloop.counter}}</td>
+			<td>{{i.name}}</td>
+			<td>{{i.score}}</td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+		<tr>
+			<td>查询人</td>
+			<td>{{name.name}}</td>
+			<td>{{name.score}}</td>
+		</tr>
+	</table>
+	{% endif %}
+</body>
+</html>
